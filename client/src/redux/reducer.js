@@ -16,12 +16,13 @@ export const unsetUser = () => {
   };
 };
 
-//초기 상태
+// 초기 상태
 const initialState = {
   data: null,
 };
 
-function reducer(state = initialState, action) {
+// 리듀서 함수
+function userReducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
       return {
@@ -35,8 +36,5 @@ function reducer(state = initialState, action) {
       return state;
   }
 }
-//리듀서는 함수, 리듀서는 state, action 2개의 매개변수!!
-//리듀서는 초기 설정 필요!
 
-export default reducer;
-//리듀서 수출  => 스토어에서 가져올수있음
+export default userReducer;

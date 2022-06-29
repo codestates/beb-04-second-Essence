@@ -12,17 +12,21 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useState } from "react";
 
-// import { useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import { setUser } from "../modules/userReducer";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../redux/reducer";
+import axios from "axios";
 
 //TODO :
 //HS => 로그인작업 찐헁 Api요청을 useEffect로 진행예정
-//useNavigate로 홈페이지로 돌아가자  => 로그인완류를 하면 돌아감
+//useNavigate로 홈페이지로 돌아가자  => 로그인완료를 하면 돌아감
 //useState ,  리덕스 어케쓰냐...........
 
 function Copyright(props) {
+  //export default 추가 ... 이유모름
+
   return (
     <Typography
       variant="body2"
@@ -46,14 +50,44 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login2() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const [userId, setUserId] = useState("");
+  const [password, setPassword] = useState("");
+  const [successLogin, setSuccessLogin] = useState(true);
+
+  const dispatch = useDispatch();
+  const history = useNavigate();
+
+  const login = () => {
+    axios
+      .post("http://localhost:5000/users/login", {
+        // 5000포트에 요청 ! userId, password
+        user_id: userId,
+        password: password,
+      })
+
+      //요청에 대한 응답이 왔다면 실행
+      .then((res) => {
+        if (res.data.message === "login") {
+          dispatch(setUser(res.data.data));
+          setSuccessLogin(true);
+          console.log("성공");
+          window.alert("1 토큰 지급");
+          history("/");
+        }
+      })
+
+      //에러
+      .catch((e) => {
+        console.log(e);
+        setSuccessLogin(false);
+      });
   };
+
+  // const handleEnter = (e) => {
+  //   if (e.key === "Enter") {
+  //     login();
+  //   }
+  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -75,7 +109,7 @@ export default function Login2() {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -108,6 +142,10 @@ export default function Login2() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={() => {
+                login();
+              }}
+              //onclick login 함수 실행추가 _효승
             >
               Sign In
             </Button>
