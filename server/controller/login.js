@@ -5,53 +5,63 @@ const { User } = require("../models");
 const Web3 = require("web3");
 
 const web3 = new Web3("http://localhost:7545");
+const tokenabi = require("../contract/tokenAbi");
 
-exports.login = async(req,res) => {
+router.get("/", async(req,res) => {
   // 포스트맨에서 userName, password를 넣으면
-  let reqUserName, reqPassword;
-  reqUserName = req.body.userName;
+  let reqEmail, reqPassword;
+  reqEmail = req.body.email;
   reqPassword = req.body.password;
 
   // user에서 find로 userName을 찾고,
-  User.findOrCreate({
+  const userInfo = await User.findOne({
     where: {
-      userName: reqUserName
-    },
-    default: {
+      email: reqEmail,
       password: reqPassword
-    }
+    },
   })
-  .then(([User, created]) => {
-    if (!created) {
-      // 있으면 있다고 응답
-      res.status(200).json({
-        loginSuccess: true,
-        message: "로그인 되셨습니다.",
-      });
-    // 없으면 DB에 저장
-    } else {
-      // 니모닉코드 생성  
-      let wallet = web3.eth.accounts.create();
-      console.log(wallet)
-      const newAccount = User.update(
-        {
-          username: reqUserName,
-          password: reqPassword,
-          address: wallet.address,
-          privateKey: wallet.privateKey,
-          balance: "0",
-        }, {
-            where: {
-              userName: reqUserName
-            }
-          })
-          .then(result => {
-            // 주소를 보여준다
-            res.json(wallet.address);
-          })
-          .catch(err => {
-            console.error(err);
-          })
-        };
-      });
-  };
+  console.log(userInfo)
+  if (!userInfo) {
+    res.status(400).send({ data: null, message: "not authorized" })
+  } 
+  else {
+      const payload = {
+        userName: userInfo.dataValues.userName,
+        email: userInfo.dataValues.email,
+        createdAt: userInfo.dataValues.createdAt,
+        updatedAt: userInfo.dataValues.updatedAt,
+      }
+
+     const value = "10";
+  const erc20Contract = await new web3.eth.Contract(
+    tokenabi,
+    process.env.ERC20_CONTRACT,
+    {
+      from: process.env.SERVER_ADDRESS,
+    }
+  );
+  
+  const server = await web3.eth.accounts.wallet.add(process.env.SERVER_SECRET);
+ 
+  await erc20Contract.methods.mintToken(userInfo.address, value).send({
+    from: server.address,
+    to: process.env.ERC20_CONTRACT,
+    gasPrice: 100,
+    gas: 2000000,
+  })
+  
+  await User.increment(
+    { balance: 1 },
+    {
+      where: {
+        email: req.body.email,
+      },
+    }
+  );
+  res.status(201).send({data:payload, message:"Login Successed"})
+
+    }
+});
+
+
+module.exports = router;

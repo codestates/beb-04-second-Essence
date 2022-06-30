@@ -38,8 +38,7 @@ router.post("/", async (req, res) => {
     gasPrice: 100,
     gas: 2000000,
   })
-
-  console.log(balance)
+  
   await User.increment(
     { balance: 1 },
     {

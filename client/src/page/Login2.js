@@ -67,6 +67,7 @@ export default function Login2() {
 
       //요청에 대한 응답이 왔다면 실행
       .then((res) => {
+        console.log(res)
         if (res.data.message === "login") {
           dispatch(setUser(res.data.data));
           setSuccessLogin(true);

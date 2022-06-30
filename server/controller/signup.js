@@ -47,17 +47,16 @@ router.post("/", async(req,res) => {
           .then((result) => {
             // 주소를 보여준다
             res.status(201).send({
-             message: "login"
+             message: "회원가입이 성공했습니다."
           })
         })
-        
-
           .catch(err => {
             console.error(err);
           })
-          console.log(res)
+          
         };
       });
+      console.log(res)
   });
 
   module.exports = router;
