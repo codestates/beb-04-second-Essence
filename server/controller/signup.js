@@ -21,9 +21,6 @@ router.post("/", async(req,res) => {
       password: reqPassword
     }
   })
-  const networkId = await web3.eth.net.getId()
-  const networkData = SocialNetwork.networks[networkId]
-  console.log("이게 주소다",networkData.address)
   .then(([User, created]) => {
     if (!created) {
       // 있으면 있다고 응답
@@ -49,13 +46,16 @@ router.post("/", async(req,res) => {
           })
           .then((result) => {
             // 주소를 보여준다
-            res.status(201).json({
-              message: "회원가입이 되었습니다.",
+            res.status(201).send({
+             message: "login"
           })
         })
+        
+
           .catch(err => {
             console.error(err);
           })
+          console.log(res)
         };
       });
   });

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Comment } = require("../models");
+const { Post } = require("../models");
 const { User } = require("../models");
 
 const Web3 = require("web3");
@@ -8,10 +8,11 @@ const web3 = new Web3("http://localhost:7545");
 const tokenabi = require("../contract/tokenAbi");
 
 router.post("/", async (req, res) => {
-  const newComment = await Comment.create({
+  const newPost = await Post.create({
     writer:req.body.writer,
     post_id: req.body.id,
     content: req.body.content,
+    title:req.body.title,
   });
 
   const receipt = await User.findOne({
@@ -19,7 +20,7 @@ router.post("/", async (req, res) => {
       userName: req.body.writer,
     },
   });
-  console.log(receipt.address);
+  //console.log(receipt.address);
   const value = "10";
   const erc20Contract = await new web3.eth.Contract(
     tokenabi,
@@ -28,9 +29,9 @@ router.post("/", async (req, res) => {
       from: process.env.SERVER_ADDRESS,
     }
   );
-
+  
   const server = await web3.eth.accounts.wallet.add(process.env.SERVER_SECRET);
-
+ 
   await erc20Contract.methods.mintToken(receipt.address, value).send({
     from: server.address,
     to: process.env.ERC20_CONTRACT,
@@ -38,6 +39,7 @@ router.post("/", async (req, res) => {
     gas: 2000000,
   })
 
+  console.log(balance)
   await User.increment(
     { balance: 1 },
     {
@@ -46,21 +48,20 @@ router.post("/", async (req, res) => {
       },
     }
   );
-
   try {
     res.status(201).json({
-      message: "Commenting Successed",
-      data: newComment,
+      message: "Posting Successed",
+      data: newPost,
     });
   } catch (err) {
     res.status(400).json({
-      message: "Error: Commenting Failed",
+      message: "Error: Posting Failed",
     });
   }
 });
 
 router.patch("/update", async (req, res) => {
-  await Comment.update(
+  await Post.update(
     { id: req.body.id, content: req.body.content },
     {
       where: {
@@ -68,7 +69,7 @@ router.patch("/update", async (req, res) => {
       },
     }
   );
-  const updatedComment = await Comment.findOne({
+  const updatedPost = await Post.findOne({
     where: {
       id: req.body.id,
     },
@@ -77,7 +78,7 @@ router.patch("/update", async (req, res) => {
   try {
     res.status(201).json({
       message: "update Successed",
-      data: updatedComment,
+      data: updatedPost,
     });
   } catch (err) {
     res.status(400).json({
@@ -87,7 +88,7 @@ router.patch("/update", async (req, res) => {
 });
 
 router.post("/delete", async (req, res) => {
-  await Comment.destroy({
+  await Post.destroy({
     where: {
       id: req.body.id,
     },
