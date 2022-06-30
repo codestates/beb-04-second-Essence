@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
 
 function Copyright(props) {
   return (
@@ -36,6 +37,14 @@ export default function SignUp() {
       email: data.get('email'),
       password: data.get('password'),
     });
+    axios.post('http://localhost:5001/user/signup', {
+      userName: data.get('userName'),
+      email: data.get('email'),
+      password: data.get('password'),
+    })
+    .catch((e) => {
+      console.error(e);
+    });
   };
 
   return (
@@ -58,18 +67,18 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
-                  autoComplete="given-name"
-                  name="firstName"
+                  autoComplete="userName"
+                  name="userName"
                   required
                   fullWidth
-                  id="firstName이름"
-                  label="First Name(이름)"
+                  id="userName"
+                  label="Name(이름)"
                   autoFocus
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
@@ -78,7 +87,7 @@ export default function SignUp() {
                   name="lastName"
                   autoComplete="family-name"
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required
