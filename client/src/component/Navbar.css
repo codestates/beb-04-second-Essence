@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 1px;
+  text-decoration: none;
+}
+.profileIcon:hover {
+  color: rgb(240, 230, 230);
+  cursor: pointer;
+}
+/* hover => 마우스 커서대면 색변화 */
+/* cursor => 마우스 커서대면 바뀜표현 */
+.login-button {
+  display: flex;
+  justify-content: flex-end;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+}
+.headerItem {
+  color: #a6b7d1;
+  padding-right: 2rem;
+  font-weight: 900;
+}
+
+.headerItem:hover {
+  color: rgb(243, 234, 234);
+  cursor: pointer;
+}

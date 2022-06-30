@@ -1,0 +1,23 @@
+.App {
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    background-color: #212121;
+    color: whitesmoke;
+    flex-direction: column; */
+    background-color: lightpink;
+  }
+  #mainheader {
+    font-family: "Montserrat", sans-serif;
+    background-color: black;
+    color: white;
+    text-align: center;
+  }
+  #form {
+    padding: 0px 90px 0px 90px;
+  }
+  .d-grid {
+    margin-top: 20px;
+  }
+  
