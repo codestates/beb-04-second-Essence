@@ -24,9 +24,9 @@ function App() {
       <Navbar />
       {/* 네비게이션바 = > 컴포넌트 */}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Post />} />
         <Route path="/login" element={<Login2 />} />
-        <Route path="/post/:id" element={<Post />} />
+        <Route path="/post/:id" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/mypage" element={<Mypage />} />
         {/* 3개 페이지형성  id만 Restful Route(REST API) 규칙을 따름*/}

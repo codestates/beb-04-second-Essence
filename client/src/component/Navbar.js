@@ -39,7 +39,22 @@ const Navbar = () => {
 
       <Link to="/post/:id">
         <div className="headerItem">
-          <h1>게시판</h1>
+          게시글 작성하기
+        </div>
+      </Link>
+      <Link to="/login">
+        <div className="headerItem">
+          로그인
+        </div>
+      </Link>
+      <Link to="/mypage">
+        <div className="headerItem">
+          마이페이지
+        </div>
+      </Link>
+      <Link to="/signup">
+        <div className="headerItem">
+          회원가입
         </div>
       </Link>
     </div>
