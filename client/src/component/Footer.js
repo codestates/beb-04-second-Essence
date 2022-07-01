@@ -9,8 +9,8 @@ import { faBlog } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 const Foot = styled.div`
-  background-color: #ffff;
-  color: #dddd;
+  background-color: #39ff9f;
+  color: #666828;
   padding: 30px;
   display: flex;
   justify-content: space-between;
@@ -85,17 +85,17 @@ const Footer = () => {
         >
           <FontAwesomeIcon icon={faBlog} style={{ fontSize: "2em" }} />
           <BlogBox className={pageOn ? "on" : "off"}>
-            <Blog target="_blank" href="https://velog.io/">
-            https://velog.io/ blog주소
+            <Blog target="_blank" href="https://velog.io/@j10501">
+             강윤채 https://velog.io/@j10501
             </Blog>
-            <Blog target="_blank" href="https://velog.io/">
-            https://velog.io/ 주소
+            <Blog target="_blank" href="https://velog.io/@bdg4611">
+              최호준 https://velog.io/@bdg4611
             </Blog>
-            <Blog target="_blank" href="https://velog.io/">
-            https://velog.io/ 주소
+            <Blog target="_blank" href="https://velog.io/@wnsghchl">
+              안효승 https://velog.io/@wnsghchl/
             </Blog>
             <Blog target="_blank" href="https://velog.io/@genius_jihyepark">
-              https://velog.io/@genius_jihyepark
+              박지혜 https://velog.io/@genius_jihyepark/
             </Blog>
           </BlogBox>
         </MoveBlog>

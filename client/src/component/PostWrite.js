@@ -11,6 +11,8 @@ function PostWrite() {
   const [post, setPost] = useState("");
 
   function handleClick() {
+    //모르겠어요...
+    //포스트.. ㅍ
     console.log(title);
     console.log(post);
   }

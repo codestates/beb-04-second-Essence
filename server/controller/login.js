@@ -20,7 +20,7 @@ router.get("/", async(req,res) => {
       password: reqPassword
     },
   })
-  console.log(userInfo)
+  // console.log(userInfo)
   if (!userInfo) {
     res.status(400).send({ data: null, message: "not authorized" })
   } 

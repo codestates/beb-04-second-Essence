@@ -41,12 +41,15 @@ export default function SignUp() {
       userName: data.get('userName'),
       email: data.get('email'),
       password: data.get('password'),
+    }) 
+    .then((res) => {
+      console.log(res)
     })
     .catch((e) => {
       console.error(e);
     });
   };
-
+  
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
