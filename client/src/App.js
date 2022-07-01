@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./page/Home";
 import Login2 from "./page/Login2";
 import Signup from "./page/Signup";
+import Mypage from "./page/Mypage";
 import Post from "./page/Post";
 import Navbar from "./component/Navbar";
 import Footer from "./component/Footer";
@@ -27,6 +28,7 @@ function App() {
         <Route path="/login" element={<Login2 />} />
         <Route path="/post/:id" element={<Post />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/mypage" element={<Mypage />} />
         {/* 3개 페이지형성  id만 Restful Route(REST API) 규칙을 따름*/}
       </Routes>
       <Footer />

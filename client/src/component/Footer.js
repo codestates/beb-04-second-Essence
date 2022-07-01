@@ -9,8 +9,9 @@ import { faBlog } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 const Foot = styled.div`
-  background-color: #39ff9f;
-  color: #666828;
+  background-color: #484848
+;
+  color: #ffd180;
   padding: 30px;
   display: flex;
   justify-content: space-between;
